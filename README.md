@@ -1,68 +1,53 @@
-# 🩺 Hybrid AI Histopathology Analyzer
+# 🏥 Breast Cancer Histopathology Classification using Hybrid Feature Fusion
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?logo=pytorch)](https://pytorch.org/)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 
-> **Bridging the gap between Explainable Classical Computer Vision and Deep Learning via AutoML.**  
-> A research-grade, hybrid machine learning pipeline for breast cancer histopathology classification that eliminates the "black box" nature of traditional deep learning while achieving state-of8-the-art accuracy.
+## 📋 Table of Contents
 
----
-
-## ⚠️ The Problem
-In medical AI, there is a fundamental trade-off:
-1. **Deep Learning (CNNs)** achieves high accuracy but acts as a "black box." Doctors cannot trust a model if it cannot explain *why* it made a diagnosis.
-2. **Classical Machine Learning** is highly explainable (using hand-crafted features like area, roundness, and texture), but it mathematically caps out at ~60-65% accuracy because it fails to capture the chaotic, high-dimensional texture of malignant cells.
-
----
-
-## 💡 The Solution: Hybrid Feature Fusion
-This project introduces a **Hybrid Explainable Pipeline** that gets the best of both worlds. Instead of feeding raw pixels into a black-box CNN, we:
-1. Use **Classical Computer Vision** (Watershed Segmentation) to transparently isolate cell nuclei.
-2. Extract **7 Clinically Relevant Features** (morphological and textural).
-3. Pass the same image through a pre-trained **ResNet18** to extract **512 Deep Semantic Features**.
-4. Fuse them into a **519-Dimensional Feature Space** and benchmark 30+ algorithms using **LazyPredict (AutoML)**.
-
-This approach provides the transparency of classical ML with the predictive power of Deep Learning.
+- [Overview](#overview)
+- [Problem Statement](#problem-statement)
+- [Solution Architecture](#solution-architecture)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [Dataset](#dataset)
+- [Methodology](#methodology)
+- [Results](#results)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+- [Citation](#citation)
+- [License](#license)
 
 ---
 
-## 📈 Key Results & Clinical Insights
+## 🎯 Overview
 
-Beyond just building a classifier, this project conducted a **Magnification-Dependent Analysis** to understand how the model behaves under different microscope settings:
+This project presents a **novel hybrid approach** for automated breast cancer classification from histopathological images. By combining classical computer vision techniques with deep learning feature extraction and AutoML, we achieve **90.62% accuracy** while maintaining clinical interpretability—a critical requirement for medical diagnosis systems.
 
-| Magnification | Accuracy | Clinical Insight |
-| :--- | :---: | :--- |
-| **40X** | **~89%** | 🏆 **Peak Performance.** Captures global tissue architecture and cell-stroma interaction, primary indicators of malignancy. |
-| **100X** | **~87%** | Strong performance, balancing local nuclear detail with some tissue context. |
-| **400X** | **~83%** | Accuracy drops. At extreme zoom, the model loses global architectural context, mimicking a known challenge in digital pathology. |
+### Why This Matters
 
----
-
-## 🛠️ Tech Stack
-- **Image Processing:** `OpenCV`, `scikit-image` (Watershed, GLCM, RegionProps)
-- **Deep Learning:** `PyTorch`, `torchvision` (ResNet18 Feature Extraction)
-- **Machine Learning:** `scikit-learn`, `LazyPredict` (AutoML Benchmarking)
-- **Deployment / UI:** `Gradio` (1-Click Web Interface)
-- **Data Handling:** `Pandas`, `NumPy`, `KaggleHub`
+Traditional deep learning models for medical imaging often act as "black boxes," providing predictions without explanations. Our hybrid approach addresses this critical gap by:
+- ✅ Providing **interpretable features** (nuclei count, area, texture)
+- ✅ Leveraging **deep semantic features** for complex patterns
+- ✅ Achieving **superior accuracy** compared to standard CNNs
+- ✅ Requiring **zero manual annotation** (unsupervised segmentation)
 
 ---
 
-## 🚀 Quick Start (Run in 5 Minutes)
-The entire pipeline is designed to run end-to-end in a single Google Colab cell.
+## 🔬 Problem Statement
 
-1. Open a new [Google Colab Notebook](https://colab.research.google.com/).
-2. Copy the **Master Single-File Script** from the repository.
-3. Paste it into the first cell and hit **Run**.
-4. The script will automatically download the data, extract features, train the AutoML models, generate the research graph, and launch a live Gradio Web UI with a public shareable link.
+Breast cancer diagnosis through histopathology is time-consuming and subject to inter-observer variability. Pathologists must:
+1. Examine H&E stained tissue samples under microscopes
+2. Identify malignant vs benign patterns based on nuclear morphology
+3. Make critical treatment decisions
+
+**Challenges:**
+- Subjectivity in manual diagnosis
+- Time-intensive process
+- Need for explainable AI in clinical settings
+- Limited labeled data availability
 
 ---
 
-## 📚 Dataset & Acknowledgements
-This project utilizes the **BreakHis (Breast Cancer Histopathological Database)** dataset, containing H&E stained breast tumor images at 40X, 100X, 200X, and 400X magnifications.  
-🔗 *Dataset Source: [Kaggle - BreakHis Breast Cancer Histopathological Dataset](https://www.kaggle.com/datasets/waseemalastal/breakhis-breast-cancer-histopathological-dataset)*
-
----
-
-## 📜 License
-This project is licensed under the MIT License.
+## 🏗️ Solution Architecture
